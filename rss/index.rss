@@ -1,0 +1,116 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Random Synaptic Firings</title><description>Thoughts, ideas and experiments that I've decided to record.</description><link>http://localhost:2368/</link><generator>Ghost 0.7</generator><lastBuildDate>Fri, 06 May 2016 05:51:52 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Electromagnetic Levitation</title><description>&lt;p&gt;&lt;img src="http://i.imgur.com/4EZ6TVz.jpg" alt="Levitation"&gt;&lt;/p&gt;
+
+&lt;h2 id="theidea"&gt;The Idea&lt;/h2&gt;
+
+&lt;p&gt;My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to&lt;/p&gt;</description><link>http://localhost:2368/levitation/</link><guid isPermaLink="false">538af096-3f66-4da3-9524-bbacc016c6f0</guid><category>Electromagnetic Levitation</category><dc:creator>Gene Ruebsamen</dc:creator><pubDate>Tue, 03 May 2016 21:35:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;img src="http://i.imgur.com/4EZ6TVz.jpg" alt="Levitation"&gt;&lt;/p&gt;
+
+&lt;h2 id="theidea"&gt;The Idea&lt;/h2&gt;
+
+&lt;p&gt;My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to get the control system working.&lt;/p&gt;
+
+&lt;h2 id="managingexpectations"&gt;Managing Expectations&lt;/h2&gt;
+
+&lt;p&gt;He initially wanted to build an entire track and have a maglev train, controlled by a microprocessor, driving around the track.  My first step was to manage his expectations. Now I could have proposed building an electromagnet and left it there; however, he already built and demonstrated a simple electromagnet hooked up to 3v and a switch.  It was time to control the electromagnet with a microprocessor.  The only two microprocessors he had experience with are the Basic Stamp 2 and the Arduino.  We opted for the &lt;a href="http://digistump.com/"&gt;Digispark&lt;/a&gt; since I have quite a few laying around and its basically an ATtiny85 pretending to be an Arduino.&lt;/p&gt;
+
+&lt;h2 id="research"&gt;Research&lt;/h2&gt;
+
+&lt;p&gt;I asked my son to do a little research and find out how (and/or if) other people have constructed magnetic levitation devices.  It turns out, there are &lt;a href="https://www.youtube.com/watch?v=J_PdPwtGLcc"&gt;quite&lt;/a&gt; &lt;a href="https://www.youtube.com/watch?v=vrqynvhhFXA"&gt;a few&lt;/a&gt; &lt;a href="https://www.youtube.com/watch?v=Y-wt3bME8nE"&gt;videos&lt;/a&gt; of electromagnetic levitation on Youtube. &lt;br&gt;
+None of them appeared to be utilizing an Arduino, but that was fine, the idea is easy enough to implement on any microprocessor. &lt;/p&gt;
+
+&lt;p&gt;The idea is to create a closed loop system that sends power to the electromagnet when the object starts to fall too far away from the electromagnet and to turn off the electromagnet when the object comes too close.  So how does one detect the distance between the electromagnet and the object?&lt;/p&gt;
+
+&lt;p&gt;There are two methods for detecting distance, both have their advantages and disadvantages:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Measuring magnetic field with Hall Effect Sensor.  &lt;/li&gt;
+&lt;li&gt;IR beam to measure distance.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;A Hall effect sensor is a transducer that varies its output voltage in response to a magnetic field which will weaken with distance. Utilizing a Hall effect sensor requires the floating object to be magnetic and involves subtracting out the magnetic field of the electromagnet.  Since I don't have any hall effect sensors laying around, we opted for the 2nd method.&lt;/p&gt;
+
+&lt;p&gt;There are several ways of detecting distance using IR.  The most straightforward way would be to utilize some type of IR proximity sensor such as a &lt;a href="https://www.sparkfun.com/products/242"&gt;Sharp GP2Y0A21YK&lt;/a&gt;. &lt;br&gt;
+&lt;img src="http://i.imgur.com/F2TnsDO.jpg" alt="Sharp sensor"&gt;
+From the &lt;a href="http://www.sparkfun.com/datasheets/Components/GP2Y0A21YK.pdf"&gt;datasheet&lt;/a&gt;, we notice that the voltage output is related to the distance; however, the timing diagram indicates the Sharp IR sensor needs 38ms on average to take a measurement.  I suspected the response time was too slow, so we didn't take this approach. &lt;br&gt;
+&lt;img src="http://i.imgur.com/b2D8lto.jpg" alt="SharpIR"&gt;&lt;/p&gt;
+
+&lt;p&gt;Instead, we opted for an approach that utilized brightness of the received IR to determine the distance of the object from the electromagnet.  The idea being that the amount of IR received at the receiver will be proportional to the inverse of the distance of the object from the electromagnet. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://i.imgur.com/uZ0qgUd.png" alt="Shadow"&gt;&lt;/p&gt;
+
+&lt;p&gt;The speed of response of a phototransistor is dominated almost totally by the capacitance of the collector-base junction and the value of the load resistance. These dominate due to the Miller Effect which multiplies the value of the RC time constant by the current gain of the phototransistor. This leads to the general rule that for devices with the same active area, the higher the gain of the photodetector, the slower will be its speed of response.  Not having a datasheet for the generic 940nm phototransistor in my possession, I don't know the exact response time, but typically they are on the order of a dozen microseconds which is at least a magnitude of order faster than the Sharp IR sensor. Feeding the output of the phototransistor (receiver) into the Digispark's A2D converter will give us a brightness value between 0 and 1023 that should be roughly inversely proportional to the distance.&lt;/p&gt;
+
+&lt;h3 id="schematic"&gt;Schematic&lt;/h3&gt;
+
+&lt;p&gt;The electrical design of an electromagnetic levitation device is quite simple.  The microcontroller needs a way to control the power to the electromagnet, and it also needs to read the brightness value on the IR receiver.  Using an efficient logic level N-Channel mosfet (Q2) is the ideal choice for driving the electromagnet. One could substitute an BJT; however, you'd lose a lot in efficiency and would likely need to size your BJT correctly for the large amount of current. &lt;br&gt;
+&lt;img src="http://i.imgur.com/Go6bjQg.png" alt="Schematic"&gt;&lt;/p&gt;
+
+&lt;p&gt;R2 will depend a lot on the type of phototransister (Q1) and Photodiode (D3) that you choose as well as the distance between the two. We now have a closed loop system and can begin writing the software for feedback control.&lt;/p&gt;
+
+&lt;p&gt;We could have added a few additional features such as a Potentiometer to adjust the set-point of the levitating object, but in order to make things easier for my 10 year old son to program, I elected to go as bare-bones as possible.&lt;/p&gt;
+
+&lt;p&gt;Here is the circuit we breadboarded along with a wooden frame we constructed. &lt;br&gt;
+&lt;img src="http://i.imgur.com/y7hojEe.jpg" alt="Completed Build"&gt;&lt;/p&gt;
+
+&lt;h3 id="software"&gt;Software&lt;/h3&gt;
+
+&lt;p&gt;The concept is quite simple, if the brightness reading from the Analog to Digital converter is above a certain set-point (value) give more power to the electromagnet, if it is below this value, reduce power to the electromagnet.  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;irValue = 1023 - analogRead(5) - ambientValue;
+
+if (irValue &amp;gt; setPoint) {
+   // turn on electromagnet
+   digitalWrite(0,HIGH);
+} else { 
+   // turn off electromagnet
+   digitalWrite(0,LOW);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The problem with such code is one is always turning on the electromagnet at full power and it can lead to oscillations. One could attempt to linearly adjust the power based upon estimated distance, which is what my son tried:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;irValue = 1023 - analogRead(5) - ambientValue;
+// brightness is inversely proportional to distance, so as irValue increases, we increase power via PWM
+analogWrite(0, irValue+threshold);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea of adjusting the power output based upon distance, but we needed something more powerful. This is where I had to step in. A PID (Proportional Integral Derivative) loop can adjust the power of the output based upon the observed error.  A PID controller is based upon this formula: &lt;br&gt;
+&lt;img src="https://upload.wikimedia.org/math/e/3/e/e3eed9f0bf326788949aaa88d84d3d9c.png" alt="PID"&gt;&lt;/p&gt;
+
+&lt;p&gt;It adjusts the output proportional to the error in the system with damping to prevent wild oscillations, so you get something like this: &lt;br&gt;
+&lt;img src="http://4.bp.blogspot.com/-HGjUuWPzTJY/UFSVlT_n1gI/AAAAAAAAA8o/rroKej2S6nI/s1600/320px-Change_with_Kd.png" alt="PID Graph"&gt;
+The Kp, Ki and Kd terms are the Proportional, Integral and Derivative terms for adjusting the behavior of the resulting output.  These terms will vary based upon the controller and application. Combining the terms gives:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// read object position and subtract ambient
+position = 1023 - analogRead(5) - ambientValue;
+int error = position - setPoint;
+int derivative = error - oldError;
+errorSum += error; // Within the void loop
+
+// PID Calculation
+int power = Kp*error + Kd*velocity + floor(Ki*errorSum);
+
+// map analog value to 8 bits
+int outPower = map(power, 0, 1023, 0, 255);
+analogWrite(outPin,outPower);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After switching over to a PID loop and adjusting the setpoint and subtracting out the ambient light the code was done.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;int readAmbient() {
+   digitalWrite(irPin, LOW);
+   // time for LED and phototransistor to settle
+   delayMicroseconds(80);
+   int ambient = 1023 - analogRead(sensorPin);
+   digitalWrite(irPin, HIGH);
+   return ambient;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr&gt;
+
+&lt;h3 id="results"&gt;Results&lt;/h3&gt;
+
+&lt;p&gt;After some tweaking of the PID terms, and allowing for a few hundred microsecond delay between loops, we have levitation! &lt;br&gt;
+&lt;img src="http://i.imgur.com/WFYILIQ.jpg" alt="Levitating Bolt"&gt;&lt;/p&gt;
+
+&lt;p&gt;My son ended up doing much of the work himself.  Of course he needed a little bit of help with designing the circuit, but he ended up breadboarding it himself.  He also took a first stab at the code.  Unfortunately, without a PID loop, I think it would be very difficult to get an object to levitate, as feedback oscillations would quickly cause the system to go unstable.  In the end, we both had a great time and he gets to show off a cool new toy!&lt;/p&gt;</content:encoded></item></channel></rss>

@@ -1,0 +1,263 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Electromagnetic Levitation</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=32556c12e7">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Random Synaptic Firings">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Electromagnetic Levitation">
+    <meta property="og:description" content="The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to">
+    <meta property="og:url" content="http://localhost:2368/levitation/">
+    <meta property="article:published_time" content="2016-05-03T21:35:00.000Z">
+    <meta property="article:modified_time" content="2016-05-06T05:51:30.012Z">
+    <meta property="article:tag" content="Electromagnetic Levitation">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Electromagnetic Levitation">
+    <meta name="twitter:description" content="The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to">
+    <meta name="twitter:url" content="http://localhost:2368/levitation/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gene Ruebsamen">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Electromagnetic Levitation">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Random Synaptic Firings",
+    "author": {
+        "@type": "Person",
+        "name": "Gene Ruebsamen",
+        "url": "http://localhost:2368/author/gene/"
+    },
+    "headline": "Electromagnetic Levitation",
+    "url": "http://localhost:2368/levitation/",
+    "datePublished": "2016-05-03T21:35:00.000Z",
+    "dateModified": "2016-05-06T05:51:30.012Z",
+    "keywords": "Electromagnetic Levitation",
+    "description": "The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn&#x27;t sure how to"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Random Synaptic Firings" href="../rss/index.html">
+</head>
+<body class="post-template tag-electromagnetic-levitation nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss/index.rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-electromagnetic-levitation">
+
+        <header class="post-header">
+            <h1 class="post-title">Electromagnetic Levitation</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-05-03">03 May 2016</time>  on <a href="../tag/electromagnetic-levitation/">Electromagnetic Levitation</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p><img src="http://i.imgur.com/4EZ6TVz.jpg" alt="Levitation"></p>
+
+<h2 id="theidea">The Idea</h2>
+
+<p>My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to get the control system working.</p>
+
+<h2 id="managingexpectations">Managing Expectations</h2>
+
+<p>He initially wanted to build an entire track and have a maglev train, controlled by a microprocessor, driving around the track.  My first step was to manage his expectations. Now I could have proposed building an electromagnet and left it there; however, he already built and demonstrated a simple electromagnet hooked up to 3v and a switch.  It was time to control the electromagnet with a microprocessor.  The only two microprocessors he had experience with are the Basic Stamp 2 and the Arduino.  We opted for the <a href="http://digistump.com/">Digispark</a> since I have quite a few laying around and its basically an ATtiny85 pretending to be an Arduino.</p>
+
+<h2 id="research">Research</h2>
+
+<p>I asked my son to do a little research and find out how (and/or if) other people have constructed magnetic levitation devices.  It turns out, there are <a href="https://www.youtube.com/watch?v=J_PdPwtGLcc">quite</a> <a href="https://www.youtube.com/watch?v=vrqynvhhFXA">a few</a> <a href="https://www.youtube.com/watch?v=Y-wt3bME8nE">videos</a> of electromagnetic levitation on Youtube. <br>
+None of them appeared to be utilizing an Arduino, but that was fine, the idea is easy enough to implement on any microprocessor. </p>
+
+<p>The idea is to create a closed loop system that sends power to the electromagnet when the object starts to fall too far away from the electromagnet and to turn off the electromagnet when the object comes too close.  So how does one detect the distance between the electromagnet and the object?</p>
+
+<p>There are two methods for detecting distance, both have their advantages and disadvantages:</p>
+
+<ol>
+<li>Measuring magnetic field with Hall Effect Sensor.  </li>
+<li>IR beam to measure distance.</li>
+</ol>
+
+<p>A Hall effect sensor is a transducer that varies its output voltage in response to a magnetic field which will weaken with distance. Utilizing a Hall effect sensor requires the floating object to be magnetic and involves subtracting out the magnetic field of the electromagnet.  Since I don't have any hall effect sensors laying around, we opted for the 2nd method.</p>
+
+<p>There are several ways of detecting distance using IR.  The most straightforward way would be to utilize some type of IR proximity sensor such as a <a href="https://www.sparkfun.com/products/242">Sharp GP2Y0A21YK</a>. <br>
+<img src="http://i.imgur.com/F2TnsDO.jpg" alt="Sharp sensor">
+From the <a href="http://www.sparkfun.com/datasheets/Components/GP2Y0A21YK.pdf">datasheet</a>, we notice that the voltage output is related to the distance; however, the timing diagram indicates the Sharp IR sensor needs 38ms on average to take a measurement.  I suspected the response time was too slow, so we didn't take this approach. <br>
+<img src="http://i.imgur.com/b2D8lto.jpg" alt="SharpIR"></p>
+
+<p>Instead, we opted for an approach that utilized brightness of the received IR to determine the distance of the object from the electromagnet.  The idea being that the amount of IR received at the receiver will be proportional to the inverse of the distance of the object from the electromagnet. </p>
+
+<p><img src="http://i.imgur.com/uZ0qgUd.png" alt="Shadow"></p>
+
+<p>The speed of response of a phototransistor is dominated almost totally by the capacitance of the collector-base junction and the value of the load resistance. These dominate due to the Miller Effect which multiplies the value of the RC time constant by the current gain of the phototransistor. This leads to the general rule that for devices with the same active area, the higher the gain of the photodetector, the slower will be its speed of response.  Not having a datasheet for the generic 940nm phototransistor in my possession, I don't know the exact response time, but typically they are on the order of a dozen microseconds which is at least a magnitude of order faster than the Sharp IR sensor. Feeding the output of the phototransistor (receiver) into the Digispark's A2D converter will give us a brightness value between 0 and 1023 that should be roughly inversely proportional to the distance.</p>
+
+<h3 id="schematic">Schematic</h3>
+
+<p>The electrical design of an electromagnetic levitation device is quite simple.  The microcontroller needs a way to control the power to the electromagnet, and it also needs to read the brightness value on the IR receiver.  Using an efficient logic level N-Channel mosfet (Q2) is the ideal choice for driving the electromagnet. One could substitute an BJT; however, you'd lose a lot in efficiency and would likely need to size your BJT correctly for the large amount of current. <br>
+<img src="http://i.imgur.com/Go6bjQg.png" alt="Schematic"></p>
+
+<p>R2 will depend a lot on the type of phototransister (Q1) and Photodiode (D3) that you choose as well as the distance between the two. We now have a closed loop system and can begin writing the software for feedback control.</p>
+
+<p>We could have added a few additional features such as a Potentiometer to adjust the set-point of the levitating object, but in order to make things easier for my 10 year old son to program, I elected to go as bare-bones as possible.</p>
+
+<p>Here is the circuit we breadboarded along with a wooden frame we constructed. <br>
+<img src="http://i.imgur.com/y7hojEe.jpg" alt="Completed Build"></p>
+
+<h3 id="software">Software</h3>
+
+<p>The concept is quite simple, if the brightness reading from the Analog to Digital converter is above a certain set-point (value) give more power to the electromagnet, if it is below this value, reduce power to the electromagnet.  </p>
+
+<pre><code>irValue = 1023 - analogRead(5) - ambientValue;
+
+if (irValue &gt; setPoint) {
+   // turn on electromagnet
+   digitalWrite(0,HIGH);
+} else { 
+   // turn off electromagnet
+   digitalWrite(0,LOW);
+}
+</code></pre>
+
+<p>The problem with such code is one is always turning on the electromagnet at full power and it can lead to oscillations. One could attempt to linearly adjust the power based upon estimated distance, which is what my son tried:</p>
+
+<pre><code>irValue = 1023 - analogRead(5) - ambientValue;
+// brightness is inversely proportional to distance, so as irValue increases, we increase power via PWM
+analogWrite(0, irValue+threshold);
+</code></pre>
+
+<p>Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea of adjusting the power output based upon distance, but we needed something more powerful. This is where I had to step in. A PID (Proportional Integral Derivative) loop can adjust the power of the output based upon the observed error.  A PID controller is based upon this formula: <br>
+<img src="https://upload.wikimedia.org/math/e/3/e/e3eed9f0bf326788949aaa88d84d3d9c.png" alt="PID"></p>
+
+<p>It adjusts the output proportional to the error in the system with damping to prevent wild oscillations, so you get something like this: <br>
+<img src="http://4.bp.blogspot.com/-HGjUuWPzTJY/UFSVlT_n1gI/AAAAAAAAA8o/rroKej2S6nI/s1600/320px-Change_with_Kd.png" alt="PID Graph">
+The Kp, Ki and Kd terms are the Proportional, Integral and Derivative terms for adjusting the behavior of the resulting output.  These terms will vary based upon the controller and application. Combining the terms gives:</p>
+
+<pre><code>// read object position and subtract ambient
+position = 1023 - analogRead(5) - ambientValue;
+int error = position - setPoint;
+int derivative = error - oldError;
+errorSum += error; // Within the void loop
+
+// PID Calculation
+int power = Kp*error + Kd*velocity + floor(Ki*errorSum);
+
+// map analog value to 8 bits
+int outPower = map(power, 0, 1023, 0, 255);
+analogWrite(outPin,outPower);
+</code></pre>
+
+<p>After switching over to a PID loop and adjusting the setpoint and subtracting out the ambient light the code was done.</p>
+
+<pre><code>int readAmbient() {
+   digitalWrite(irPin, LOW);
+   // time for LED and phototransistor to settle
+   delayMicroseconds(80);
+   int ambient = 1023 - analogRead(sensorPin);
+   digitalWrite(irPin, HIGH);
+   return ambient;
+}
+</code></pre>
+
+<hr>
+
+<h3 id="results">Results</h3>
+
+<p>After some tweaking of the PID terms, and allowing for a few hundred microsecond delay between loops, we have levitation! <br>
+<img src="http://i.imgur.com/WFYILIQ.jpg" alt="Levitating Bolt"></p>
+
+<p>My son ended up doing much of the work himself.  Of course he needed a little bit of help with designing the circuit, but he ended up breadboarding it himself.  He also took a first stab at the code.  Unfortunately, without a PID loop, I think it would be very difficult to get an object to levitate, as feedback oscillations would quickly cause the system to go unstable.  In the end, we both had a great time and he gets to show off a cool new toy!</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="../author/gene/">Gene Ruebsamen</a></h4>
+
+                    <p>Read <a href="../author/gene/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Electromagnetic%20Levitation&amp;url=http://localhost:2368/levitation/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/levitation/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/levitation/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">Random Synaptic Firings</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=32556c12e7"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=32556c12e7"></script>
+
+</body>
