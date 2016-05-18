@@ -1,0 +1,198 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Cross Correlation of Equities</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=23c853b158">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="https://gururise.github.io/cross-correlation-of-equities/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Random Synaptic Firings">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Cross Correlation of Equities">
+    <meta property="og:description" content="In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want">
+    <meta property="og:url" content="https://gururise.github.io/cross-correlation-of-equities/">
+    <meta property="article:published_time" content="2015-04-18T06:27:00.000Z">
+    <meta property="article:modified_time" content="2016-05-18T17:56:40.700Z">
+    <meta property="article:tag" content="machine learning">
+    <meta property="article:tag" content="time-series prediction">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cross Correlation of Equities">
+    <meta name="twitter:description" content="In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want">
+    <meta name="twitter:url" content="https://gururise.github.io/cross-correlation-of-equities/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gene Ruebsamen">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="machine learning, time-series prediction">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Random Synaptic Firings",
+    "author": {
+        "@type": "Person",
+        "name": "Gene Ruebsamen",
+        "url": "https://gururise.github.io/author/gene/"
+    },
+    "headline": "Cross Correlation of Equities",
+    "url": "https://gururise.github.io/cross-correlation-of-equities/",
+    "datePublished": "2015-04-18T06:27:00.000Z",
+    "dateModified": "2016-05-18T17:56:40.700Z",
+    "keywords": "machine learning, time-series prediction",
+    "description": "In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Random Synaptic Firings" href="https://gururise.github.io/rss/">
+</head>
+<body class="post-template tag-machine-learning tag-time-series-prediction nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="https://gururise.github.io/">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="https://gururise.github.io/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-machine-learning tag-time-series-prediction">
+
+        <header class="post-header">
+            <h1 class="post-title">Cross Correlation of Equities</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2015-04-17">17 April 2015</time>  on <a href="../tag/machine-learning/">machine learning</a>, <a href="../tag/time-series-prediction/">time-series prediction</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>In the last <a href="http://gururise.github.io/just-how-predictable-are-highly-liquid-equities/">article</a> on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change.</p>
+
+<p>This time, I want to introduce cross correlation. Cross correlation is a standard method of estimating the degree to which two series are correlated as a function of the lag of one relative to the other.  Cross correlation of a discrete series is defined as:</p>
+
+<p><img src="../content/images/2016/05/df665b17d676571c9dc7a1800e1b186a.png" alt="crosscorrelation"></p>
+
+<h3 id="equitiescanbelonelybythemselves">Equities can be lonely by themselves</h3>
+
+<p>In the last article we were looking at individual discrete time series. This time, lets take a look at the cross correlation of UVXY and SPY:</p>
+
+<pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),spy_df['Adj Close'].pct_change(),"UVXY","SPY")  
+</code></pre>
+
+<p><img src="../content/images/2016/05/output_5_0-1.png" alt="png"></p>
+
+<p>First thing we notice is the large negative correlation at lag 0.  Unlike autocorrelation, a large magnitude at lag 0 can provide us with possibly useful information (that will have to be a topic for another day).  We also notice a few other lags showing magnitudes above 0.2 which is something we did not see in the autocorrelation plot of random noise. Ideally, we would like to advantage of correlations at lag $(n&lt;&gt;0)$.</p>
+
+<p>Now lets look at the signal UVXY and another time-series that shall (for now) remain nameless:</p>
+
+<pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),uvxy_df['Data'].pct_change(),"UVXY","Data")  
+</code></pre>
+
+<p><img src="../content/images/2016/05/output_7_0-1.png" alt="png"></p>
+
+<p>Now we have something usable.  Right off the bat, we notice significant correlations at Lags -17,17,19.  But what do these correlations mean in terms of discrete time-series forecasting?  How can one take advantage of this information?</p>
+
+<p>That will have to come in the next article...</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="../author/gene/">Gene Ruebsamen</a></h4>
+
+                    <p>Read <a href="../author/gene/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Cross%20Correlation%20of%20Equities&amp;url=https://gururise.github.io/cross-correlation-of-equities/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://gururise.github.io/cross-correlation-of-equities/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://gururise.github.io/cross-correlation-of-equities/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="../levitation/">
+        <section class="post">
+            <h2>Electromagnetic Levitation</h2>
+            <p>The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="../just-how-predictable-are-highly-liquid-equities/">
+        <section class="post">
+            <h2>Predictability of equities</h2>
+            <p>Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="https://gururise.github.io">Random Synaptic Firings</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=23c853b158"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=23c853b158"></script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script type="text/x-mathjax-config">  
+MathJax.Hub.Config({  
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>  
+</body>
