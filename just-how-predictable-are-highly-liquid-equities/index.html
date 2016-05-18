@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="../assets/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=6e668327ef">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=23c853b158">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
 
     <link rel="canonical" href="https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/">
@@ -20,16 +20,16 @@
     <meta property="og:site_name" content="Random Synaptic Firings">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Predictability of liquid equities">
-    <meta property="og:description" content="Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(yt,y{t-h}) = y_h$ Lag-h autocorrelation is given by: $\rhoh = Corr(yt,y{t-h}) = \frac{yh}{y0}$ The denominator $y0$ is the lag 0 covariance.">
+    <meta property="og:description" content="Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(y_t,y_{t-h}) = y_h$ Lag-h autocorrelation is given by: $\rho_h = Corr(y_t,y_{t-h}) = \frac{y_h}{y_0}$ The denominator $y_">
     <meta property="og:url" content="https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/">
     <meta property="article:published_time" content="2015-04-05T02:09:00.000Z">
-    <meta property="article:modified_time" content="2016-05-18T05:25:04.732Z">
+    <meta property="article:modified_time" content="2016-05-18T06:05:42.829Z">
     <meta property="article:tag" content="machine learning">
     <meta property="article:tag" content="time-series prediction">
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Predictability of liquid equities">
-    <meta name="twitter:description" content="Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(yt,y{t-h}) = y_h$ Lag-h autocorrelation is given by: $\rhoh = Corr(yt,y{t-h}) = \frac{yh}{y0}$ The denominator $y0$ is the lag 0 covariance.">
+    <meta name="twitter:description" content="Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(y_t,y_{t-h}) = y_h$ Lag-h autocorrelation is given by: $\rho_h = Corr(y_t,y_{t-h}) = \frac{y_h}{y_0}$ The denominator $y_">
     <meta name="twitter:url" content="https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/">
     <meta name="twitter:label1" content="Written by">
     <meta name="twitter:data1" content="Gene Ruebsamen">
@@ -49,9 +49,9 @@
     "headline": "Predictability of liquid equities",
     "url": "https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/",
     "datePublished": "2015-04-05T02:09:00.000Z",
-    "dateModified": "2016-05-18T05:25:04.732Z",
+    "dateModified": "2016-05-18T06:05:42.829Z",
     "keywords": "machine learning, time-series prediction",
-    "description": "Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(yt,y{t-h}) &#x3D; y_h$ Lag-h autocorrelation is given by: $\\rhoh &#x3D; Corr(yt,y{t-h}) &#x3D; \\frac{yh}{y0}$ The denominator $y0$ is the lag 0 covariance."
+    "description": "Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(y_t,y_{t-h}) &#x3D; y_h$ Lag-h autocorrelation is given by: $\\rho_h &#x3D; Corr(y_t,y_{t-h}) &#x3D; \\frac{y_h}{y_0}$ The denominator $y_"
 }
     </script>
 
@@ -98,15 +98,15 @@
         <section class="post-content">
             <p><a href="https://en.wikipedia.org/wiki/Autocorrelation">Autocorrelation</a> (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time. <br>
 Define: <br>
-$$Cov(y<em>t,y</em>{t-h}) = y_h$$
+$$Cov(y_t,y_{t-h}) = y_h$$
 Lag-h autocorrelation is given by:</p>
 
-<p>$$\rho<em>h = Corr(y</em>t,y<em>{t-h}) = \frac{y</em>h}{y<em>0}$$
-The denominator $y</em>0$ is the lag 0 covariance.</p>
+<p>$$\rho_h = Corr(y_t,y_{t-h}) = \frac{y_h}{y_0}$$
+The denominator $y_0$ is the lag 0 covariance.</p>
 
 <p>Knowing this, we can calculate the autocorrelation of a signal and it will tell us the similarity betweens observations as a function of time lag between the observations.  One would expect a signal with a high autocorrelation to be more predictable than one with a low autocorrelation.  What does the autocorrelation of various equities look like?  We are about to find out.</p>
 
-<h3 id="howmuchcorrelationdoesgaussiannoisehave">How much correlation does gaussian noise have?</h3>
+<h3 id="howpredictableisnoise">How predictable is noise?</h3>
 
 <p>First we should take a look at the correlation of a random signal.  Lets introduce some gaussian noise.</p>
 
@@ -225,15 +225,14 @@ We now look at a real signal from the equities market to see how autocorrelated 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     
 
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=6e668327ef"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=6e668327ef"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>  
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=23c853b158"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=23c853b158"></script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 <script type="text/x-mathjax-config">  
 MathJax.Hub.Config({  
-tex2jax: {inlineMath: <a href="http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%27%24%27%2C%27%24%27%5D%2C+%5B%27%5C%5C%28%27%2C%27%5C%5C%29%27" target="_blank">'$','$'], ['\\(','\\)'</a>}  
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 });
-</script>
-<script>
-function mathjaxify(){function e(){$(".MathJax_Preview").each(function(){""!=$(this).text()&&MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).attr("id")])})}var t=document.getElementsByClassName("rendered-markdown")[0];("undefined"==typeof typeset||1==typeset)&&(MathJax.Hub.Queue(["Typeset",MathJax.Hub,t]),e())}var timeout,entry=document.getElementsByClassName("entry-markdown")[0];jQuery(document).keypress(function(){clearTimeout(timeout),timeout=setTimeout(mathjaxify,2001)}),setTimeout(function(){jQuery(".ember-view").click(function(){mathjaxify()})},500);
-</script>
+</script>  
 </body>

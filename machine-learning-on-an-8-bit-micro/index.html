@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="../assets/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=6e668327ef">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=23c853b158">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
 
     <link rel="canonical" href="https://gururise.github.io/machine-learning-on-an-8-bit-micro/">
@@ -23,7 +23,7 @@
     <meta property="og:description" content="8 bits, but 16Mhz! I recently built a robot that utilized a Atmel ATmega328P 8-bit processor.  Sensory input consisted of an ultrasonic range-finder attached to a servo that can take readings at at various angles.  Other inputs include a 3-axis ADXL335 accelerometer as well as wheel rotation sensors.  I designed">
     <meta property="og:url" content="https://gururise.github.io/machine-learning-on-an-8-bit-micro/">
     <meta property="article:published_time" content="2013-05-01T20:11:00.000Z">
-    <meta property="article:modified_time" content="2016-05-17T07:20:55.519Z">
+    <meta property="article:modified_time" content="2016-05-18T06:03:45.356Z">
     <meta property="article:tag" content="machine learning">
     
     <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
     "headline": "Machine Learning on an 8-bit Micro",
     "url": "https://gururise.github.io/machine-learning-on-an-8-bit-micro/",
     "datePublished": "2013-05-01T20:11:00.000Z",
-    "dateModified": "2016-05-17T07:20:55.519Z",
+    "dateModified": "2016-05-18T06:03:45.356Z",
     "keywords": "machine learning",
     "description": "8 bits, but 16Mhz! I recently built a robot that utilized a Atmel ATmega328P 8-bit processor.  Sensory input consisted of an ultrasonic range-finder attached to a servo that can take readings at at various angles.  Other inputs include a 3-axis ADXL335 accelerometer as well as wheel rotation sensors.  I designed"
 }
@@ -121,10 +121,10 @@
 <h3 id="itsallaboutthesigmoid">Its all about the Sigmoid!</h3>
 
 <p>I decided to see if I could implement a Feedforward Neural Network and attempt to train it utilizing the gradient descent algorithm (also known as Backpropagation of Error).  The typical Artificial Neural Network (ANN) consists of multiple layers of neurons that each sum the inputs*weights and integrate the result and generate an output.  The inputs are typically floating point numbers. The activation function most utilized in the simple feed forward network is the Sigmoid function: <br>
-<img src="http://i.imgur.com/9vHtyGK.png" alt="sigmoid">
+$$g(z) = \frac{1}{1+e^{-z}}$$
 <img src="http://i.imgur.com/vfwg0R0.png" alt="sigmoid_plot">
 Every forward pass through the neural network will calculate g(z) multiple times.  Remember, this is <strong>slow</strong> due to the ATmega328P lacking hardware floating point.  It is especially slow because just calculating the exponential involves close to a dozen divisions and multiplications.  We can do better than this.  I came up with a function that approximates the sigmoid but only requires two divides and no multiplications. <br>
-<img src="http://i.imgur.com/uO3THMa.png" alt="approximation">
+$$g(z) = \frac{z/2}{(1+abs(z))+0.5}$$
 <img src="http://i.imgur.com/7IT6Nu8.png" alt="approximation_plot"></p>
 
 <p>The functions are close enough that training through gradient descent works just fine, even with floats.  The end result is a robot that utilizes a neural network to learn to automatically navigate the room in the following manner:</p>
@@ -200,15 +200,14 @@ Every forward pass through the neural network will calculate g(z) multiple times
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     
 
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=6e668327ef"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=6e668327ef"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>  
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=23c853b158"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=23c853b158"></script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 <script type="text/x-mathjax-config">  
 MathJax.Hub.Config({  
-tex2jax: {inlineMath: <a href="http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%27%24%27%2C%27%24%27%5D%2C+%5B%27%5C%5C%28%27%2C%27%5C%5C%29%27" target="_blank">'$','$'], ['\\(','\\)'</a>}  
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 });
-</script>
-<script>
-function mathjaxify(){function e(){$(".MathJax_Preview").each(function(){""!=$(this).text()&&MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).attr("id")])})}var t=document.getElementsByClassName("rendered-markdown")[0];("undefined"==typeof typeset||1==typeset)&&(MathJax.Hub.Queue(["Typeset",MathJax.Hub,t]),e())}var timeout,entry=document.getElementsByClassName("entry-markdown")[0];jQuery(document).keypress(function(){clearTimeout(timeout),timeout=setTimeout(mathjaxify,2001)}),setTimeout(function(){jQuery(".ember-view").click(function(){mathjaxify()})},500);
-</script>
+</script>  
 </body>
