@@ -23,7 +23,7 @@
     <meta property="og:description" content="Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(y_t,y_{t-h}) = y_h$ Lag-h autocorrelation is given by: $\rho_h = Corr(y_t,y_{t-h}) = \frac{y_h}{y_0}$ The denominator $y_">
     <meta property="og:url" content="https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/">
     <meta property="article:published_time" content="2015-04-05T02:09:00.000Z">
-    <meta property="article:modified_time" content="2016-05-18T06:05:42.829Z">
+    <meta property="article:modified_time" content="2016-05-18T06:06:49.626Z">
     <meta property="article:tag" content="machine learning">
     <meta property="article:tag" content="time-series prediction">
     
@@ -49,7 +49,7 @@
     "headline": "Predictability of liquid equities",
     "url": "https://gururise.github.io/just-how-predictable-are-highly-liquid-equities/",
     "datePublished": "2015-04-05T02:09:00.000Z",
-    "dateModified": "2016-05-18T06:05:42.829Z",
+    "dateModified": "2016-05-18T06:06:49.626Z",
     "keywords": "machine learning, time-series prediction",
     "description": "Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two points in time.  Define:  $Cov(y_t,y_{t-h}) &#x3D; y_h$ Lag-h autocorrelation is given by: $\\rho_h &#x3D; Corr(y_t,y_{t-h}) &#x3D; \\frac{y_h}{y_0}$ The denominator $y_"
 }
@@ -137,8 +137,9 @@ plot_acorr(sig,"noisy sin(x)")
 
 <p><img src="../content/images/2016/05/output_8_0-1.png" alt="png"></p>
 
-<p>Even with gaussian noise added to the original signal, the autocorrelation is still quite high. There are quite a few regression methods we could use that could predict/extract the original signal from the noise in the above example. But does our noisy sine signal model real world equities? Are there really patterns hidden in the noise in equity markets? <br>
-We now look at a real signal from the equities market to see how autocorrelated those signals are.</p>
+<p>Even with gaussian noise added to the original signal, the autocorrelation is still quite high. There are quite a few regression methods we could use that could predict/extract the original signal from the noise in the above example. But does our noisy sine signal model real world equities? Are there really patterns hidden in the noise in equity markets? </p>
+
+<p>We now look at a real signal from the equities market to see how autocorrelated those signals are.  Lets look at IBM.</p>
 
 <pre><code class="language-python">plot_acorr(ibm_df['Adj Close'],"IBM")  
 </code></pre>
