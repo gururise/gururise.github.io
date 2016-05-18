@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="../assets/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=861f17ba43">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=6e668327ef">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
 
     <link rel="canonical" href="https://gururise.github.io/machine-learning-on-an-8-bit-micro/">
@@ -180,10 +180,10 @@ Every forward pass through the neural network will calculate g(z) multiple times
 </main>
 
 <aside class="read-next">
-    <a class="read-next-story no-cover" href="../levitation/">
+    <a class="read-next-story no-cover" href="../just-how-predictable-are-highly-liquid-equities/">
         <section class="post">
-            <h2>Electromagnetic Levitation</h2>
-            <p>The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for…</p>
+            <h2>Predictability of liquid equities</h2>
+            <p>Autocorrelation (somtimes referred to as lagged-correlation) is defined as the linear dependence of a variable with itself at two…</p>
         </section>
     </a>
 </aside>
@@ -200,7 +200,15 @@ Every forward pass through the neural network will calculate g(z) multiple times
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     
 
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=861f17ba43"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=861f17ba43"></script>
-
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=6e668327ef"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=6e668327ef"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>  
+<script type="text/x-mathjax-config">  
+MathJax.Hub.Config({  
+tex2jax: {inlineMath: <a href="http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%27%24%27%2C%27%24%27%5D%2C+%5B%27%5C%5C%28%27%2C%27%5C%5C%29%27" target="_blank">'$','$'], ['\\(','\\)'</a>}  
+});
+</script>
+<script>
+function mathjaxify(){function e(){$(".MathJax_Preview").each(function(){""!=$(this).text()&&MathJax.Hub.Queue(["Typeset",MathJax.Hub,$(this).attr("id")])})}var t=document.getElementsByClassName("rendered-markdown")[0];("undefined"==typeof typeset||1==typeset)&&(MathJax.Hub.Queue(["Typeset",MathJax.Hub,t]),e())}var timeout,entry=document.getElementsByClassName("entry-markdown")[0];jQuery(document).keypress(function(){clearTimeout(timeout),timeout=setTimeout(mathjaxify,2001)}),setTimeout(function(){jQuery(".ember-view").click(function(){mathjaxify()})},500);
+</script>
 </body>
