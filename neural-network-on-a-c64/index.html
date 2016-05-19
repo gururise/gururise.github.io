@@ -1,0 +1,289 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Neural Network on a C64</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=23c853b158">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="https://gururise.github.io/neural-network-on-a-c64/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Random Synaptic Firings">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Neural Network on a C64">
+    <meta property="og:description" content="The Commodore 64 was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs: 1 Mhz MOS 6502 8-bit CPU 16 Color Graphics powered by the MOS VIC-II 3 Channel Sound via the SID">
+    <meta property="og:url" content="https://gururise.github.io/neural-network-on-a-c64/">
+    <meta property="article:published_time" content="2016-05-17T20:44:00.000Z">
+    <meta property="article:modified_time" content="2016-05-19T15:59:28.382Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Neural Network on a C64">
+    <meta name="twitter:description" content="The Commodore 64 was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs: 1 Mhz MOS 6502 8-bit CPU 16 Color Graphics powered by the MOS VIC-II 3 Channel Sound via the SID">
+    <meta name="twitter:url" content="https://gururise.github.io/neural-network-on-a-c64/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Gene Ruebsamen">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Random Synaptic Firings",
+    "author": {
+        "@type": "Person",
+        "name": "Gene Ruebsamen",
+        "url": "https://gururise.github.io/author/gene/"
+    },
+    "headline": "Neural Network on a C64",
+    "url": "https://gururise.github.io/neural-network-on-a-c64/",
+    "datePublished": "2016-05-17T20:44:00.000Z",
+    "dateModified": "2016-05-19T15:59:28.382Z",
+    "description": "The Commodore 64 was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs: 1 Mhz MOS 6502 8-bit CPU 16 Color Graphics powered by the MOS VIC-II 3 Channel Sound via the SID"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Random Synaptic Firings" href="https://gururise.github.io/rss/">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="https://gururise.github.io/">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="https://gururise.github.io/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Neural Network on a C64</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-05-17">17 May 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>The <a href="http://www.commodore.ca/commodore-products/commodore-64-the-best-selling-computer-in-history/">Commodore 64</a> was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs:</p>
+
+<ul>
+<li>1 Mhz MOS 6502 8-bit CPU</li>
+<li>16 Color Graphics powered by the MOS VIC-II</li>
+<li>3 Channel Sound via the SID</li>
+<li>64Kb of RAM</li>
+</ul>
+
+<p><img src="../content/images/2016/05/commodore-64.jpg" alt="Commodore 64"></p>
+
+<p>Now 64Kb is not much RAM; however, back in 2013 I built a robot that utilized an 8-bit ATmega328P with only 2Kb of RAM (+32Kb of Flash RAM) and managed to <a href="http://gururise.github.io/machine-learning-on-an-8-bit-micro/">squeeze a neural network</a> into those constraints.  The ATMega328P was running at 16Mhz instead of 1Mhz of the MOS 6502.  Exactly 16x the frequency.  How fast will a neural net run and train on the C64?  </p>
+
+<p>Just like the ATMega328P, the problem with the MOS 6502 is it does not support floating point, making implementation more difficult.  Last time, I used the soft-float library.  This time, I take a more efficient approach and implement everything in Fixed Point math.</p>
+
+<h3 id="letsfixthemath">Lets Fix the Math!</h3>
+
+<p><img src="../content/images/2016/05/fixedmath.png" alt="Fixed Math"></p>
+
+<p>In the example above, we use one byte (8-bit field) to represent the floating point number.  The first 4 bits of the field will represent the sign bit with 3 bits representing the integer before the decimal point.  A 3 bit integer gives us a range of $\pm7$.  The fractional part will allow us a granularity of $\pm0.0625$. Fixed point math is often referred to by the number of bits before and after the decimal.  In this case, we have 4.4 fixed math. <mark>4.4 Fixed Math is likely a bit too coarse and does not have enough range in the integer part for the integration and multiplication that occurs at the Activation function in the neural network.</mark>  How much accuracy will we need for our application?  Lets have another look at the Sigmoid function we will be using for activation: <br>
+$$g(x) = \frac{1}{1+e^{-x}}$$
+<img src="http://i.imgur.com/vfwg0R0.png" alt="Sigmoid">
+The output of the sigmoid has a range of $y = [0,1]$ a granularity of 256 steps should be a close enough approximation.  The integer part will be multiplied by the weights of the Network and integrated at the input of the activation function.  We will limit the input $x = [-100,100]$.  This means we need 7 bits plus a sign bit for a total of 8 bits for the integer part.  Two bytes (8.8 fixed math) should suffice.</p>
+
+<h3 id="bringingthingstogether">Bringing things together</h3>
+
+<p>Now that we've decided to utilized Fixed Point math, we need to decide how to go about implementing the code.  Originally, I planned to write everything in 6502 Assembly (which is how I did it back when I was a kid and had my C64).  6502 Assembly is not too difficult if you've ever worked with the Motorola 6800 series, it's very similar.  Here's a very simple example branching in Assembly:  </p>
+
+<pre><code>;This routine stores the contents of the accumulator into location
+;$30, $31, or $32, depending upon whether the accumulator holds a
+;value less than 11, equal to 11, or greater than 11, respectively.
+
+        CMP  #0A     ;Compare accumulator to 11
+        BCS  EQGT3
+        STA  $30     ;Accumulator less than 11
+        JMP  DONE
+EQGT    BNE  GT  
+        STA  $31     ;Accumulator equal to 11
+        JMP  DONE
+GT      STA  $32     ;Accumulator greater than 11  
+DONE     .  
+</code></pre>
+
+<p>Writing an entire neural network with gradient descent along with the fixed point library routines in Assembly is going to take some time, in order to speed things along, I decided to go with C.  Luckily, in 2016 we've got a nice cross-compiler suite for the MOS 6502 called <a href="https://github.com/cc65/cc65">cc65</a>. <br>
+The question one my ask at this point is:  </p>
+
+<blockquote>
+  <p>Why bother with custom Fixed Point math routines if we are using C, won't the compiler utilize it's own soft-float routines??</p>
+</blockquote>
+
+<p>Unfortunately, soft-float is not implemented in the cc65 cross compiler.  So we will have to handle floating point manually.  I noticed in the contrib directory of cc65, someone had already written a small fixed point library; however, there were two problems with this library:</p>
+
+<ol>
+<li>It does not support signed math.  </li>
+<li>It handles double (ie. 16.16 and 32.8) routines, which are unnecessary for our application and just take up precious memory.</li>
+</ol>
+
+<p>Lets write our own implementation of 8.8 Fixed Math.  First we create our type <code>fixed</code> and declare a few helpful constants.</p>
+
+<pre><code>#include &lt;cc65.h&gt;
+
+typedef signed int fixed;
+
+#define FIXEDPT_BITS 8
+// Lets define some commonly used numbers
+#define fixedZero 0
+#define fixedOne ((fixed)((fixed)1 &lt;&lt; FIXEDPT_BITS))
+#define fixedTwo ((fixed)((fixed)2 &lt;&lt; FIXEDPT_BITS))
+#define fixedOneHalf (fixedOne &gt;&gt; 1)
+</code></pre>
+
+<p>We then handle the case of addition and subtraction first:  </p>
+
+<pre><code>// A+B 
+#define fixedAdd(A,B) (A+B)
+// A-B
+#define fixedSub(A,B) (A-B)
+</code></pre>
+
+<p>Simple.  For multiplication and division we need to be more careful.  Since we are doing 16 bit (8.8) arithmetic, we could end up with 32-bit results that we may need to handle.  The cc65 suite has some nice helper functions built in:</p>
+
+<pre><code>// A*B
+#define fixedMul(A,B) ((fixed)(cc65_imul16x16r32 (A, B) &gt;&gt; FIXEDPT_BITS))
+
+// A/B
+#define fixedDiv(A,B) ((fixed)cc65_idiv32by16r16((signed long)A &lt;&lt; FIXEDPT_BITS, B))
+</code></pre>
+
+<p>Finally, we will be utilizing abs(), so lets implement that as well:  </p>
+
+<pre><code>// abs(A)
+#define fixedAbs(A) ((A) &lt; 0 ? -(A) : (A))
+</code></pre>
+
+<p>How do we initialize a fixed type? We need some helper functions:  </p>
+
+<pre><code>fixed internalFloatStringToFixed(char* value);  
+#define floatStringToFixed(value) (internalFloatStringToFixed(value))
+
+void internalFixedToFloatString(fixed value, char* result);  
+#define fixedToFloatString(value, result) {  \
+  internalFixedToFloatString(value, result); \
+}
+
+#define bitStringToFixed(value, result) {  \
+   result = strtoul (value, NULL, 2);      \
+}
+
+#define fixedToBitString(value, result) { \
+  utoa(value, result, 2);                 \
+}
+
+#define fixedToInt(value) (value &gt;&gt; FIXEDPT_BITS)
+#define fixedToChar(value) ((unsigned char)(value &gt;&gt; FIXEDPT_BITS))
+#define intToFixed(value) ((fixed)value &lt;&lt; FIXEDPT_BITS)
+#define charToFixed(value) ((fixed)value &lt;&lt; FIXEDPT_BITS)
+</code></pre>
+
+<p>And there we have it.  You can download the complete code for the fixed point math routines <a href="https://mega.nz/#!xlJ3wL6a!7i1gnt3WkXXoFU__T1aa-jIiI-oA5JAtqcnWVqG0U-s">here</a>.</p>
+
+<h3 id="implementingtheneuralnetwork">Implementing the neural network</h3>
+
+<p>Since I've already discussed <a href="http://gururise.github.io/machine-learning-on-an-8-bit-micro/">implementing a neural network in an 8-bit MCU</a> in the past, you can read that article for more details, but briefly we can accelerate things greatly by using an approximation of the Sigmoid function: <br>
+$$g(z) = \frac{z/2}{(1+abs(z))+0.5}$$
+<img src="http://i.imgur.com/7IT6Nu8.png" alt="Approximate Sigmoid">
+Now lets fire it up and have the neural network train on Exclusve Or (XOR): <br>
+<img src="../content/images/2016/05/xor-table.png" alt="XOR Truth Table"></p>
+
+<p>And finally, on the Commodore 64 itself, after 100 iterations of backpropagation (approximately 1 minute of training): <br>
+<img src="../content/images/2016/05/c64_net_output-1.png" alt="C64 Neural Network"></p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="../author/gene/">Gene Ruebsamen</a></h4>
+
+                    <p>Read <a href="../author/gene/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Neural%20Network%20on%20a%20C64&amp;url=https://gururise.github.io/neural-network-on-a-c64/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://gururise.github.io/neural-network-on-a-c64/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://gururise.github.io/neural-network-on-a-c64/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story prev no-cover" href="../levitation/">
+        <section class="post">
+            <h2>Electromagnetic Levitation</h2>
+            <p>The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="https://gururise.github.io">Random Synaptic Firings</a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=23c853b158"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=23c853b158"></script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script type="text/x-mathjax-config">  
+MathJax.Hub.Config({  
+    tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>  
+</body>
