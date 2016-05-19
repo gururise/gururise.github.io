@@ -23,7 +23,7 @@
     <meta property="og:description" content="The Commodore 64 was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs: 1 Mhz MOS 6502 8-bit CPU 16 Color Graphics powered by the MOS VIC-II 3 Channel Sound via the SID">
     <meta property="og:url" content="https://gururise.github.io/neural-network-on-a-c64/">
     <meta property="article:published_time" content="2016-05-17T20:44:00.000Z">
-    <meta property="article:modified_time" content="2016-05-19T16:01:50.883Z">
+    <meta property="article:modified_time" content="2016-05-19T16:23:04.720Z">
     <meta property="article:tag" content="machine learning">
     
     <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
     "headline": "Neural Network on a C64",
     "url": "https://gururise.github.io/neural-network-on-a-c64/",
     "datePublished": "2016-05-17T20:44:00.000Z",
-    "dateModified": "2016-05-19T16:01:50.883Z",
+    "dateModified": "2016-05-19T16:23:04.720Z",
     "keywords": "machine learning",
     "description": "The Commodore 64 was the best selling personal computer in history.  It was released in 1982 and at the time was quite an advanced computer.  It had the following specs: 1 Mhz MOS 6502 8-bit CPU 16 Color Graphics powered by the MOS VIC-II 3 Channel Sound via the SID"
 }
@@ -114,14 +114,14 @@
 
 <p><img src="../content/images/2016/05/fixedmath.png" alt="Fixed Math"></p>
 
-<p>In the example above, we use one byte (8-bit field) to represent the floating point number.  The first 4 bits of the field will represent the sign bit with 3 bits representing the integer before the decimal point.  A 3 bit integer gives us a range of $\pm7$.  The fractional part will allow us a granularity of $\pm0.0625$. Fixed point math is often referred to by the number of bits before and after the decimal.  In this case, we have 4.4 fixed math. <mark>4.4 Fixed Math is likely a bit too coarse and does not have enough range in the integer part for the integration and multiplication that occurs at the Activation function in the neural network.</mark>  How much accuracy will we need for our application?  Lets have another look at the Sigmoid function we will be using for activation: <br>
+<p>In the example above, we use one byte (8-bit field) to represent the floating point number.  The first 4 bits of the field will represent the sign bit with 3 bits representing the integer before the decimal point.  A 3 bit integer gives us a range of $\pm7$.  The fractional part will allow us a granularity of $\pm0.0625$. Fixed point math is often referred to by the number of bits before and after the decimal.  In this case, we have 4.4 fixed-point representation (sometimes called 1.3.4 fixed-point representation). <mark>4.4 Fixed representation is likely a bit too coarse and does not have enough range in the integer part for the integration and multiplication that occurs at the Activation function in the neural network.</mark>  How much accuracy will we need for our application?  Lets have another look at the Sigmoid function we will be using for activation: <br>
 $$g(x) = \frac{1}{1+e^{-x}}$$
 <img src="http://i.imgur.com/vfwg0R0.png" alt="Sigmoid">
 The output of the sigmoid has a range of $y = [0,1]$ a granularity of 256 steps should be a close enough approximation.  The integer part will be multiplied by the weights of the Network and integrated at the input of the activation function.  We will limit the input $x = [-100,100]$.  This means we need 7 bits plus a sign bit for a total of 8 bits for the integer part.  Two bytes (8.8 fixed math) should suffice.</p>
 
 <h3 id="bringingthingstogether">Bringing things together</h3>
 
-<p>Now that we've decided to utilized Fixed Point math, we need to decide how to go about implementing the code.  Originally, I planned to write everything in 6502 Assembly (which is how I did it back when I was a kid and had my C64).  6502 Assembly is not too difficult if you've ever worked with the Motorola 6800 series, it's very similar.  Here's a very simple example branching in Assembly:  </p>
+<p>Now that we've decided to utilized Fixed Point representation, we need to decide how to go about implementing the code.  Originally, I planned to write everything in 6502 Assembly (which is how I did it back when I was a kid and had my C64).  6502 Assembly is not too difficult if you've ever worked with the Motorola 6800 series, it's very similar.  Here's a very simple example branching in Assembly:  </p>
 
 <pre><code>;This routine stores the contents of the accumulator into location
 ;$30, $31, or $32, depending upon whether the accumulator holds a
