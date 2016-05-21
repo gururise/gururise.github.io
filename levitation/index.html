@@ -23,7 +23,7 @@
     <meta property="og:description" content="The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to">
     <meta property="og:url" content="https://gururise.github.io/levitation/">
     <meta property="article:published_time" content="2016-05-03T21:35:00.000Z">
-    <meta property="article:modified_time" content="2016-05-06T05:51:30.012Z">
+    <meta property="article:modified_time" content="2016-05-21T18:35:00.261Z">
     <meta property="article:tag" content="Electromagnetic Levitation">
     
     <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
     "headline": "Electromagnetic Levitation",
     "url": "https://gururise.github.io/levitation/",
     "datePublished": "2016-05-03T21:35:00.000Z",
-    "dateModified": "2016-05-06T05:51:30.012Z",
+    "dateModified": "2016-05-21T18:35:00.261Z",
     "keywords": "Electromagnetic Levitation",
     "description": "The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn&#x27;t sure how to"
 }
@@ -166,10 +166,14 @@ if (irValue &gt; setPoint) {
 analogWrite(0, irValue+threshold);
 </code></pre>
 
-<p>Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea of adjusting the power output based upon distance, but we needed something more powerful. This is where I had to step in. A PID (Proportional Integral Derivative) loop can adjust the power of the output based upon the observed error.  A PID controller is based upon this formula: <br>
+<p>Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea of adjusting the power output based upon distance, but we needed something more powerful. This is where I had to step in. </p>
+
+<h3 id="proportionalintegralderivative">Proportional-Integral-Derivative</h3>
+
+<p>A PID (Proportional Integral Derivative) controller is a closed loop system that can adjust the power of the output proportionally based upon the current error, accumulated error and the derivative of the error.  A PID controller utilizes this basic formula: <br>
 <img src="https://upload.wikimedia.org/math/e/3/e/e3eed9f0bf326788949aaa88d84d3d9c.png" alt="PID"></p>
 
-<p>It adjusts the output proportional to the error in the system with damping to prevent wild oscillations, so you get something like this: <br>
+<p>It adjusts the output proportional to the error trying to maintain a setpoint with damping to prevent wild oscillations, so you get something like this: <br>
 <img src="http://4.bp.blogspot.com/-HGjUuWPzTJY/UFSVlT_n1gI/AAAAAAAAA8o/rroKej2S6nI/s1600/320px-Change_with_Kd.png" alt="PID Graph">
 The Kp, Ki and Kd terms are the Proportional, Integral and Derivative terms for adjusting the behavior of the resulting output.  These terms will vary based upon the controller and application. Combining the terms gives:</p>
 
