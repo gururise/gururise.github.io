@@ -23,7 +23,7 @@
     <meta property="og:description" content="In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want">
     <meta property="og:url" content="https://gururise.github.io/cross-correlation-of-equities/">
     <meta property="article:published_time" content="2015-06-18T06:27:00.000Z">
-    <meta property="article:modified_time" content="2016-05-21T07:34:12.731Z">
+    <meta property="article:modified_time" content="2016-05-21T07:54:34.173Z">
     <meta property="article:tag" content="machine learning">
     <meta property="article:tag" content="time-series prediction">
     
@@ -49,7 +49,7 @@
     "headline": "Cross Correlation of Equities",
     "url": "https://gururise.github.io/cross-correlation-of-equities/",
     "datePublished": "2015-06-18T06:27:00.000Z",
-    "dateModified": "2016-05-21T07:34:12.731Z",
+    "dateModified": "2016-05-21T07:54:34.173Z",
     "keywords": "machine learning, time-series prediction",
     "description": "In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want"
 }
@@ -109,7 +109,7 @@
 <pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),spy_df['Adj Close'].pct_change(),"UVXY","SPY")  
 </code></pre>
 
-<p><img src="http://i.imgur.com/zYph3Zi.png" alt="png"></p>
+<p><img src="http://i.imgur.com/qL2wq8W.png" alt="png"></p>
 
 <p>First thing we notice is the large negative correlation at lag 0.  Unlike autocorrelation, a large magnitude at lag 0 can provide us with possibly useful information (that will have to be a topic for another day).  We also notice a few other lags showing magnitudes above 0.2 which is something we did not see in the autocorrelation plot of random noise. Ideally, we would like to take advantage of correlations at lag $(n&lt;&gt;0)$.</p>
 
@@ -118,9 +118,9 @@
 <pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),uvxy_df['Data'].pct_change(),"UVXY","Data")  
 </code></pre>
 
-<p><img src="http://i.imgur.com/G4bkTP8.png" alt="png"></p>
+<p><img src="http://i.imgur.com/Bl4rNNX.png" alt="png"></p>
 
-<p>Now we have something usable. There are some regression methods that could work with this. Right off the bat, we notice significant correlations at Lags -1,-2,-3.  But what do these correlations mean in terms of discrete time-series forecasting?  How can one take advantage of this information?  Things need to get <strong>much more complicated</strong> before we can use this new knowledge.</p>
+<p>Now we have might have something usable. There are some regression methods that could work with this. Right off the bat, we notice somewhat significant correlations at Lags -1,-2,-3.  But what do these correlations mean in terms of discrete time-series forecasting?  How can one take advantage of this information?  Things need to get <strong>much more complicated</strong> before we can use this new knowledge.</p>
 
 <p>Stay tuned..</p>
         </section>
