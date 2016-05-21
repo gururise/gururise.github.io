@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="../assets/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=617e6dc870">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=33c9075b72">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
 
     <link rel="canonical" href="https://gururise.github.io/cross-correlation-of-equities/">
@@ -23,7 +23,7 @@
     <meta property="og:description" content="In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want">
     <meta property="og:url" content="https://gururise.github.io/cross-correlation-of-equities/">
     <meta property="article:published_time" content="2015-06-18T06:27:00.000Z">
-    <meta property="article:modified_time" content="2016-05-18T20:24:58.987Z">
+    <meta property="article:modified_time" content="2016-05-21T07:34:12.731Z">
     <meta property="article:tag" content="machine learning">
     <meta property="article:tag" content="time-series prediction">
     
@@ -49,7 +49,7 @@
     "headline": "Cross Correlation of Equities",
     "url": "https://gururise.github.io/cross-correlation-of-equities/",
     "datePublished": "2015-06-18T06:27:00.000Z",
-    "dateModified": "2016-05-18T20:24:58.987Z",
+    "dateModified": "2016-05-21T07:34:12.731Z",
     "keywords": "machine learning, time-series prediction",
     "description": "In the last article on time-series prediction, we talked about autocorrelation and how we can use it to determine if a signal has an underlying pattern.  We saw that IBM (and most other equities) show little to no correlation when observed from a daily percent change. This time, I want"
 }
@@ -109,7 +109,7 @@
 <pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),spy_df['Adj Close'].pct_change(),"UVXY","SPY")  
 </code></pre>
 
-<p><img src="../content/images/2016/05/output_5_0-1.png" alt="png"></p>
+<p><img src="http://i.imgur.com/zYph3Zi.png" alt="png"></p>
 
 <p>First thing we notice is the large negative correlation at lag 0.  Unlike autocorrelation, a large magnitude at lag 0 can provide us with possibly useful information (that will have to be a topic for another day).  We also notice a few other lags showing magnitudes above 0.2 which is something we did not see in the autocorrelation plot of random noise. Ideally, we would like to take advantage of correlations at lag $(n&lt;&gt;0)$.</p>
 
@@ -118,9 +118,9 @@
 <pre><code class="language-python">plot_xcorr(uvxy_df['Adj Close'].pct_change(),uvxy_df['Data'].pct_change(),"UVXY","Data")  
 </code></pre>
 
-<p><img src="../content/images/2016/05/output_7_0-1.png" alt="png"></p>
+<p><img src="http://i.imgur.com/G4bkTP8.png" alt="png"></p>
 
-<p>Now we have something usable. There are some regression methods that could work with this. Right off the bat, we notice significant correlations at Lags -17,17,19.  But what do these correlations mean in terms of discrete time-series forecasting?  How can one take advantage of this information?  Things need to get <strong>much more complicated</strong> before we can use this new knowledge.</p>
+<p>Now we have something usable. There are some regression methods that could work with this. Right off the bat, we notice significant correlations at Lags -1,-2,-3.  But what do these correlations mean in terms of discrete time-series forecasting?  How can one take advantage of this information?  Things need to get <strong>much more complicated</strong> before we can use this new knowledge.</p>
 
 <p>Stay tuned..</p>
         </section>
@@ -185,8 +185,8 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     
 
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=617e6dc870"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=617e6dc870"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=33c9075b72"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=33c9075b72"></script>
 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
