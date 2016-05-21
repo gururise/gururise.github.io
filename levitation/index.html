@@ -23,7 +23,7 @@
     <meta property="og:description" content="The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn't sure how to">
     <meta property="og:url" content="https://gururise.github.io/levitation/">
     <meta property="article:published_time" content="2016-05-03T21:35:00.000Z">
-    <meta property="article:modified_time" content="2016-05-21T18:35:00.261Z">
+    <meta property="article:modified_time" content="2016-05-21T18:37:12.148Z">
     <meta property="article:tag" content="Electromagnetic Levitation">
     
     <meta name="twitter:card" content="summary">
@@ -48,7 +48,7 @@
     "headline": "Electromagnetic Levitation",
     "url": "https://gururise.github.io/levitation/",
     "datePublished": "2016-05-03T21:35:00.000Z",
-    "dateModified": "2016-05-21T18:35:00.261Z",
+    "dateModified": "2016-05-21T18:37:12.148Z",
     "keywords": "Electromagnetic Levitation",
     "description": "The Idea My 10yr old son asked, a few weeks ago, how he could build a mag-lev train for a science demo in his 5th grade class.  He loves building small robots and electronic projects.  He knew such a project would involve an electromagnet, but he wasn&#x27;t sure how to"
 }
@@ -166,7 +166,7 @@ if (irValue &gt; setPoint) {
 analogWrite(0, irValue+threshold);
 </code></pre>
 
-<p>Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea of adjusting the power output based upon distance, but we needed something more powerful. This is where I had to step in. </p>
+<p>Unfortunately, this doesn't quite work and the object would end up oscillating and falling because the power was not being adjusted quickly enough.  He had the right idea and understood there is a relationship between power output and estimated distance.  Unfortunately, that relationship is not necessarily linear. We needed something more dynamic. This is where I had to step in. </p>
 
 <h3 id="proportionalintegralderivative">Proportional-Integral-Derivative</h3>
 
